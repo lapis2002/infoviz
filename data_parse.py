@@ -49,15 +49,16 @@ def parseBusinessesByYearCategory(df, year):
     
     prev_companies = {}
     for cat in categories:
-        prev_companies[cat] = set(df_prevyear[df_prevyear["Category"] == cat])
+        prev_companies[cat] = set(df_prevyear[df_prevyear["Category"] == cat]["Name"])
         
     cur_companies = {}
     for cat in categories:
-        cur_companies[cat] = set(df_year[df_year["Category"] == cat])
+        cur_companies[cat] = set(df_year[df_year["Category"] == cat]["Name"])
         
     new_open_businesses = {}
     close_businesses = {}
     for cat in categories:
+        # set operations
         closed = prev_companies[cat] - cur_companies[cat] # business open last year but not this year
         close_businesses[cat] = len(closed)
         new_open_businesses[cat] = len(cur_companies[cat] - prev_companies[cat]) # appear this year but not last year
@@ -113,3 +114,9 @@ businesses = pd.read_csv("victoria_data.csv")
 # a = set(test['Category'][test['Name'] == 'FEAR ON THE PIER'])
 # b = test[test['Name'] == 'LISA HELPS VICTORIA']
 # print(len(b))
+print(set(businesses[businesses["Category"] == "Entertainment"]["Name"]))
+
+print((businesses[businesses["Category"] == "Entertainment"]))
+
+
+
